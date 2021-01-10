@@ -9,7 +9,6 @@ import feedparser
 
 from secret_settings import *
 
-
 intents = discord.Intents.default()
 intents.members = True
 intents.typing = False
@@ -42,18 +41,6 @@ async def on_ready():
                 break
         if not bot:
             await bot_channel.send("Wassup "+member.name+"!")
-        #print(member)
-
-    # for guild in client.guilds:
-    #     for member in guild.members:
-    #         print(member)
-    #         await bot_channel.send("Wassup "+member.name+"!")
-
-
-    #await bot_channel.send("Wassup World!")
-    # for m in discord.Guild.members:
-    #     await bot_channel.send("hi "+m.name+"!")
-    #await bot_channel.send("members:"+str(discord.Guild.member_count))
 
 @client.event
 async def on_message(message):
@@ -64,13 +51,13 @@ async def on_message(message):
     if message.content == "!dm test":
         await message.author.send("sup my dude")
 
-    # if msg == "!hello":
-    #     if message.author.name == None:
-    #         await message.channel.send('Hello '+message.author.name+"!")
-    #     else:
-    #         await message.channel.send('Hello '+message.author.nick+"!")
-
     await client.process_commands(message)
+
+@client.event
+async def on_member_join(member):
+    user = {"discord_id": member.id,"feeds":[]}
+    print(json.dumps(user, indent=2))
+
 
 def get_rss_feeds():
     """Get the xml for all feeds for all users"""
